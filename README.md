@@ -2,11 +2,11 @@
 
 ## Supported platforms
 
-* NanoPi NEO,
-* OrangePi One,
-* OrangePi Zero *(experimental)*,
-* Olimex oLinuXino Lime A10,
-* Raspberry Pi A/B/B+/Zero.
+* [`friendlyarm_nanopi-neo`](platform/friendlyarm_nanopi-neo) - [NanoPi NEO](//www.friendlyelec.com/index.php?route=product/product&product_id=132),
+* [`xunlong_orangepi-one`](platform/xunlong_orangepi-one) - [OrangePi One](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-One.html),
+* [`xunlong_orangepi-zero`](platform/xunlong_orangepi-zero) - OrangePi Zero *(experimental)*,
+* [`olimex_a10-olinuxino-lime`](platform/olimex_a10-olinuxino-lime) - [Olimex OLinuXino LIME A10](//www.olimex.com/Products/OLinuXino/A10/A10-OLinuXino-LIME-n4GB/open-source-hardware),
+* [`rpi`](platform/rpi) - Raspberry Pi B(+)/Zero *(1st gen)*.
 
 ## Requirements
 
@@ -61,9 +61,9 @@
 ## Booting OpenWRT
 
 - First boot may take a long time.
-- IP address is obtained from DHCP (NO STATIC ADDRESS). DHCP server should also serve address of NTP server.
+- IP address is obtained from DHCP (**no static address**). DHCP server should also serve address of NTP server(s). Docker daemon starts **after** NTP synchronization
 - `root` account **is disabled** - login via SSH as `admin` (password `admin`). Use `sudo` in order to execute commands with elevated priviledges.
-- There's no web interface.
+- There's **no web interface**.
 
 ## Composing Docker images
 
