@@ -1,0 +1,13 @@
+#
+# nanopi-neo - configuration
+#
+
+uci -q batch << EOF
+set system.status_led=led
+set system.status_led.sysfs=nanopi:blue:status
+set system.status_led.trigger=activity
+commit system
+set irqbalance.irqbalance.enabled=1
+commit irqbalance
+EOF
+

@@ -1,0 +1,28 @@
+#
+# pi-hole
+#
+
+uci -q batch << EOF
+set network.pihole=interface
+set network.pihole.proto=none
+set network.pihole.device=dckr-pihole
+set network.pihole.auto=0
+set network.pihole_dev=device
+set network.pihole_dev.name=dckr-pihole
+set network.pihole_dev.type=bridge
+commit network
+add_list firewall.@zone[0].network=pihole
+commit firewall
+EOF
+
+
+#
+# required dirs
+#
+
+mkdir -p /etc/pi-hole/etc-dnsmasq.d
+mkdir -p /etc/pi-hole/etc-pihole
+mkdir -p /etc/pi-hole/var-log
+mkdir -p /etc/pi-hole/var-log/lighttpd
+
+

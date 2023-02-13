@@ -1,0 +1,25 @@
+#
+# sudo
+# 
+HDIR=/var/run/admin
+
+#
+# group & users
+#
+groupadd -r sudo
+
+useradd -M -d $HDIR -G sudo,docker -s /bin/ash admin
+echo 'admin:admin' | chpasswd
+
+mkdir -p "$HDIR"
+chown -R admin:admin "$HDIR"
+chmod 750 "$HDIR"
+
+#
+# disable root login
+#
+uci -q batch << EOF
+set dropbear.@dropbear[0].RootPasswordAuth=off
+commit dropbear
+EOF
+

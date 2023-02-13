@@ -1,0 +1,15 @@
+{
+    "data-root": "/opt/docker",
+    "iptables": true,
+    "log-driver": "syslog",
+    "log-level": "error",
+    "log-opts": {
+        "syslog-address": "unixgram:///dev/log",
+        "mode": "non-blocking",
+        "tag": "docker/{{.Name}}"
+     },
+    "max-concurrent-downloads": 1,
+    "storage-driver": "overlay2",
+    "shutdown-timeout": 60
+}
+

@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  blocky:
+    image: spx01/blocky
+    container_name: blocky
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    environment:
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./config.yml:/app/config.yml
+      - './var-log/:/var/log'
+      - '/dev/log:/dev/log'
+    logging:
+      driver: syslog
+      options:
+        syslog-address: 'unixgram:///dev/log'
+        mode: non-blocking
+        tag: 'docker/{{.Name}}'
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: dckr-blocky
+

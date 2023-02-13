@@ -1,0 +1,20 @@
+#
+# custom configuration
+#
+
+[pi0]
+gpu_mem=24
+hdmi_blanking=1
+disable_splash=1
+max_framebuffers=0
+
+[pi0w]
+dtoverlay=disable-bt
+
+[pi1]
+gpu_mem=24
+hdmi_blanking=1
+disable_splash=1
+max_framebuffers=0
+
+[all]

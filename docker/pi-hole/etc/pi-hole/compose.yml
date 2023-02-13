@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: pi-hole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"    
+    environment:
+      TZ: 'Europe/Warsaw'
+      WEBPASSWORD: 'pihole'
+      CUSTOM_CACHE_SIZE: '0'
+      DNSMASQ_USER: 'root'
+      QUERY_LOGGING: 'false'
+      FTLCONF_PRIVACYLEVEL: '3'
+      FTLCONF_MAXDBDAYS: '30'
+      FTLCONF_DBINTERVAL: '5.0'
+      FTLCONF_IGNORE_LOCALHOST: 'yes'
+      # custom DNSes
+      # PIHOLE_DNS_: '192.168.1.1'
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - './var-log/:/var/log'
+      - '/dev/log:/dev/log'
+    restart: unless-stopped
+    logging:
+      driver: syslog
+      options:
+        syslog-address: 'unixgram:///dev/log'
+        mode: non-blocking
+        tag: 'docker/{{.Name}}'
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: dckr-pihole
+

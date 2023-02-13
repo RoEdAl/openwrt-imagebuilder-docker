@@ -1,0 +1,35 @@
+#
+# dockerd - custom configuration file
+#
+
+uci -q batch << EOF
+set network.docker=interface
+set network.docker.proto=none
+set network.docker.device=docker0
+set network.docker.auto=0
+set network.docker_dev=device
+set network.docker_dev.name=docker0
+set network.docker_dev.type=bridge
+commit network
+add_list firewall.@zone[0].network=docker
+commit firewall
+set dockerd.@globals[0].alt_config_file=/etc/docker/daemon.json
+set dockerd.@globals[0].ntp=1
+delete dockerd.@globals[0].data_root
+delete dockerd.@globals[0].log_level
+delete dockerd.@globals[0].iptables
+delete dockerd.@firewall[0]
+commit dockerd
+EOF
+
+#
+# clean-up firewall config
+#
+while uci get firewall.@rule[-1].name 2&>1 >/dev/null
+do
+  uci delete firewall.@rule[-1]
+done
+uci delete firewall.@zone[1]
+uci delete firewall.@forwarding[0]
+uci commit firewall
+

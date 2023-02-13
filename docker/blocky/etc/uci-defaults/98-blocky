@@ -1,0 +1,17 @@
+#
+# blocky
+#
+
+uci -q batch << EOF
+set network.blocky=interface
+set network.blocky.proto=none
+set network.blocky.device=dckr-blocky
+set network.blocky.auto=0
+set network.blocky_dev=device
+set network.blocky_dev.name=dckr-blocky
+set network.blocky_dev.type=bridge
+commit network
+add_list firewall.@zone[0].network=blocky
+commit firewall
+EOF
+

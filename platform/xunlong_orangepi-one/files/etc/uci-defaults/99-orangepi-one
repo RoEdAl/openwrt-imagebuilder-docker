@@ -1,0 +1,13 @@
+#
+# orangepi-one - configuration
+#
+
+uci -q batch << EOF
+set system.status_led=led
+set system.status_led.sysfs=orangepi:red:status
+set system.status_led.trigger=activity
+commit system
+set irqbalance.irqbalance.enabled=1
+commit irqbalance
+EOF
+

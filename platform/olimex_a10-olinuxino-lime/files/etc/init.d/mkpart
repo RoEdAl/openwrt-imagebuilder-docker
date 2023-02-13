@@ -1,0 +1,31 @@
+#!/bin/sh /etc/rc.common
+
+START=10
+SDCARD=/dev/mmcblk0
+
+start() {
+    if [ -b ${SDCARD}p3 ]; then
+	FSUUID=$(lsblk --noheadings -o UUID ${SDCARD}p3)
+	if [ -z "${FSUUID}" ]; then
+	    logger -t mkpart 'Create F2FS filesystem on additional partition'
+	    mkfs.f2fs -l DOCKER -O 'extra_attr,inode_checksum,sb_checksum' -q ${SDCARD}p3
+	    FSUUID=$(lsblk --noheadings -o UUID ${SDCARD}p3)
+	    uci -q batch << EOF
+set fstab.@global[0].check_fs=1
+set fstab.@global[0].auto_swap=0
+set fstab.@mount[1].target=/boot
+set fstab.@mount[1].enabled=1
+set fstab.docker=mount
+set fstab.docker.uuid=${FSUUID}
+set fstab.docker.target=/opt/docker
+set fstab.docker.enabled=1
+commit fstab
+EOF
+	fi
+        return 0
+    else
+        logger -t mkpart 'Create additional partitions'
+        echo -e ',,00\n,,' | sfdisk -a -q --no-reread ${SDCARD}
+    fi
+}
+

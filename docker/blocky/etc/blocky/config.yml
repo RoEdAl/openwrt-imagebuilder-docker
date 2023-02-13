@@ -1,0 +1,21 @@
+upstream:
+  default:
+    - 8.8.4.4
+blocking:
+  processingConcurrency: 1
+  blackLists:
+    ads:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - http://hole.cert.pl/domains/domains_hosts.txt
+  clientGroupsBlock:
+    default:
+      - ads
+port: 53
+upstreamTimeout: 5s
+connectIPVersion: v4
+logLevel: warn
+caching:
+  maxTime: -1
+
+  
+

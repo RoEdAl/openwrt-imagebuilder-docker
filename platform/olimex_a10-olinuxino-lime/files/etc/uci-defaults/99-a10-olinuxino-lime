@@ -1,0 +1,11 @@
+#
+# A10 oLinuXini Lime - configuration
+#
+
+uci -q batch << EOF
+set system.usr_led=led
+set system.usr_led.sysfs=a10-olinuxino-lime:green:usr
+set system.usr_led.trigger=activity
+commit system
+EOF
+

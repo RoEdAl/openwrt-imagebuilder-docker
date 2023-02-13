@@ -1,0 +1,16 @@
+#
+# docker - run on NTP sync
+#
+
+NTP=$(uci get dockerd.globals.ntp)
+[ ${NTP:-0} -eq 1 ] || exit 0
+
+case $ACTION in
+    step)
+    service dockerd start
+    ;;
+
+    stratum)
+    #[ "$stratum" -lt 16 ] && service dockerd restart
+    ;;
+esac

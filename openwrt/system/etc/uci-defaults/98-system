@@ -1,0 +1,25 @@
+#
+# basic system configuration
+#
+
+CPUSERIAL=$(cat /sys/firmware/devicetree/base/serial-number | sed 's/^0*//')
+BMAC=$(printf "%02x" $(( $(hexdump -n1 -e'/1 "0x%02x"' /dev/random) & ~1 | 2)) && hexdump -n5 -e'/1 ":%02x"' /dev/random)
+
+uci -q batch << EOF
+set system.@system[0].hostname=DockerHost-$CPUSERIAL
+set system.@system[0].timezone=CET-1CEST,M3.5.0,M10.5.0/3
+set system.@system[0].log_size=16
+delete system.ntp.server
+commit system
+delete network.globals.ula_prefix
+delete network.@device[0].ports
+add_list network.@device[0].ports=eth0
+set network.@device[0].macaddr=$BMAC
+set network.lan.ipv6=0
+set network.lan.proto=dhcp
+delete network.lan.ip6assign
+delete network.lan.ipaddr
+delete network.lan.netmask
+commit network
+EOF
+
