@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+
+START=10
+SDCARD=/dev/mmcblk0
+BOOTPART=${SDCARD}p1
+
+boot() {
+    # boot partition
+    [ -b ${BOTPART} ] || return 0
+    uci -q get fstab.boot.uuid 2&>1 >/dev/null && return 0
+    
+    uci -q batch << EOF
+set fstab.@mount[1].target=/boot
+set fstab.@mount[1].enabled=1
+rename fstab.@mount[1]=boot
+commit fstab
+EOF
+}
+

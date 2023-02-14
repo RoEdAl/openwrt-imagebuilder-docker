@@ -2,22 +2,12 @@
 
 START=10
 SDCARD=/dev/mmcblk0
-BOOTPART=${SDCARD}p1
 DOCKERPART=${SDCARD}p3
 
 boot() {
-    # boot partition
-    if [ -b ${BOTPART} ]; then
-        uci -q batch << EOF
-set fstab.@mount[1].target=/boot
-set fstab.@mount[1].enabled=1
-commit fstab
-EOF
-    fi
-    
     # docker partition
     [ -b ${DOCKERPART} ] || return 0
-    uci get fstab.docker.uuid 2&>1 >/dev/null && return 0
+    uci -q get fstab.docker.uuid 2&>1 >/dev/null && return 0
     
     FSUUID=$(lsblk --noheadings -o UUID ${DOCKERPART})
 
