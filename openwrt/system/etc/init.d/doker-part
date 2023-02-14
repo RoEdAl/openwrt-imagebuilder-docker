@@ -1,0 +1,42 @@
+#!/bin/sh /etc/rc.common
+
+START=10
+SDCARD=/dev/mmcblk0
+BOOTPART=${SDCARD}p1
+DOCKERPART=${SDCARD}p3
+
+boot() {
+    # boot partition
+    if [ -b ${BOTPART} ]; then
+        uci -q batch << EOF
+set fstab.@mount[1].target=/boot
+set fstab.@mount[1].enabled=1
+commit fstab
+EOF
+    fi
+    
+    # docker partition
+    [ -b ${DOCKERPART} ] || return 0
+    uci get fstab.docker.uuid 2&>1 >/dev/null && return 0
+    
+    FSUUID=$(lsblk --noheadings -o UUID ${DOCKERPART})
+
+    if [ -z "${FSUUID}" ]; then
+        logger -p info -t mkpart 'Create F2FS filesystem on DOCKER partition'
+        mkfs.f2fs -l DOCKER -O 'extra_attr,inode_checksum,sb_checksum' -q ${DOCKERPART} | logger -t mkpart -s
+        FSUUID=$(lsblk --noheadings -o UUID ${DOCKERPART})
+        if [ -z "${FSUUID}" ]; then
+            logger -p err -t mkpart -s 'Failed to create F2FS filesystem on DOCKER partition'
+            return 0
+        fi
+    fi
+    
+    uci -q batch << EOF
+set fstab.docker=mount
+set fstab.docker.uuid=${FSUUID}
+set fstab.docker.target=/opt/docker
+set fstab.docker.enabled=1
+commit fstab
+EOF
+}
+
