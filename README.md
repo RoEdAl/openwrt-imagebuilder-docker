@@ -87,7 +87,7 @@ See: [Pi-hole in a docker container](//github.com/pi-hole/docker-pi-hole).
 
 ```.bash
 cd /etc/blocky
-./compose-blocky
+./compose-blocky.sh
 ```
 
 See: [Fast and lightweight DNS proxy as ad-blocker for local network with many features](//github.com/0xERR0R/blocky).
