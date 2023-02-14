@@ -27,7 +27,7 @@ PKGS=(
 	block-mount
 	kmod-usb-storage
 	lsblk fdisk sfdisk
-	losetup
+	losetup libcap-bin
 )
 
 NPKGS=(

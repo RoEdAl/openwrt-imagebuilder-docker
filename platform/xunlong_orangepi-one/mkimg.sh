@@ -27,7 +27,7 @@ PKGS=(
 	block-mount
 	kmod-usb-storage
 	lsblk fdisk sfdisk
-	irqbalance losetup
+	irqbalance losetup libcap-bin
 )
 
 NPKGS=(

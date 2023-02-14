@@ -37,7 +37,7 @@ PKGS=(
 	shadow-groupadd shadow-groupmod
 	sudo
 	docker docker-compose dockerd
-	rng-tools losetup
+	rng-tools losetup libcap-bin
 )
 
 NPKGS=(
