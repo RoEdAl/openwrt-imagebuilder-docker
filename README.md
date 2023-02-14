@@ -54,14 +54,14 @@
    ```.bash
    cd ../../platform/olimex_a10-olinuxino-lime
    ./mkimg.sh
-   ...
+   ```
 
   After successful execution you should find uncompressed image file at current directory.
 
 ## Booting OpenWRT
 
 - First boot may take a long time.
-- IP address is obtained from DHCP (**no static address**). DHCP server should also serve address of NTP server(s). Docker daemon starts **after** NTP synchronization
+- IP address is obtained from DHCP (**no static address**). DHCP server should also serve address of NTP server(s). Docker daemon starts **after** NTP synchronization.
 - `root` account **is disabled** - login via SSH as `admin` (password `admin`). Use `sudo` in order to execute commands with elevated priviledges.
 - There's **no web interface**.
 
@@ -81,6 +81,8 @@ cd /etc/pi-hole
 ./compose-pi-hole.sh
 ```
 
+See: [Pi-hole in a docker container](//github.com/pi-hole/docker-pi-hole).
+
 ## Blocky
 
 ```.bash
@@ -88,3 +90,4 @@ cd /etc/blocky
 ./compose-blocky
 ```
 
+See: [Fast and lightweight DNS proxy as ad-blocker for local network with many features](//github.com/0xERR0R/blocky).
