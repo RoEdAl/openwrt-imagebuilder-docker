@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+
+START=40
+
+HDIR=/var/run/admin
+
+boot() {
+    mkdir -p $HDIR
+    chown -R admin:admin $HDIR
+    chmod 750 $HDIR
+}
