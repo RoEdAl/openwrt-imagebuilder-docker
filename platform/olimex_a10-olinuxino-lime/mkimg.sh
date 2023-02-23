@@ -21,13 +21,14 @@ PKGS=(
 	shadow-useradd shadow-usermod shadow-chpasswd
 	shadow-groupadd shadow-groupmod
 	sudo
+	iptables-nft ip6tables-nft
 	docker dockerd docker-compose
 	kmod-fs-vfat kmod-nls-cp852 dosfstools
 	kmod-fs-f2fs f2fs-tools
 	block-mount
 	kmod-usb-storage
-	lsblk fdisk sfdisk
-	losetup libcap-bin
+	lsblk fdisk sfdisk losetup
+	libcap-bin
 )
 
 NPKGS=(

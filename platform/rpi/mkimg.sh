@@ -32,12 +32,14 @@ PKGS=(
 	kmod-fs-f2fs f2fs-tools
 	block-mount
 	kmod-usb-storage
-	lsblk fdisk sfdisk
+	lsblk fdisk sfdisk losetup
 	shadow-useradd shadow-usermod shadow-chpasswd
 	shadow-groupadd shadow-groupmod
 	sudo
+	iptables-nft ip6tables-nft
 	docker docker-compose dockerd
-	rng-tools losetup libcap-bin
+	rng-tools
+	libcap-bin
 )
 
 NPKGS=(
