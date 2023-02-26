@@ -1,0 +1,18 @@
+#
+# NanoPi R1S - configuration
+#
+
+uci -q batch << EOF
+set system.sys_led=led
+set system.sys_led.sysfs=nanopi:red:sys
+set system.sys_led.trigger=activity
+commit system
+set network.globals.packet_steering=1
+delete network.wan
+delete network.wan6
+add_list network.@device[0].ports=eth1
+commit network
+set irqbalance.irqbalance.enabled=1
+commit irqbalance
+EOF
+

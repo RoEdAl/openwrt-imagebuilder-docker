@@ -3,6 +3,8 @@
 ## Supported platforms
 
 * [`friendlyarm_nanopi-neo`](platform/friendlyarm_nanopi-neo) - [NanoPi NEO](//www.friendlyelec.com/index.php?route=product/product&product_id=132),
+* [`friendlyarm_nanopi-neo2`](platform/friendlyarm_nanopi-neo2) - NanoPi NEO2,
+* [`friendlyarm_nanopi-r1s-h5`](platform/friendlyarm_nanopi-r1s-h5) - [NanoPi R1S (H5)](//www.friendlyelec.com/index.php?route=product/product&path=69&product_id=274),
 * [`xunlong_orangepi-one`](platform/xunlong_orangepi-one) - [OrangePi One](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-One.html),
 * [`xunlong_orangepi-zero`](platform/xunlong_orangepi-zero) - OrangePi Zero *(experimental)*,
 * [`olimex_a10-olinuxino-lime`](platform/olimex_a10-olinuxino-lime) - [Olimex OLinuXino LIME A10](//www.olimex.com/Products/OLinuXino/A10/A10-OLinuXino-LIME-n4GB/open-source-hardware),

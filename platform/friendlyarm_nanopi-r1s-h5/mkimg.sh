@@ -9,7 +9,7 @@ readonly SCRIPTDIR=$(dirname -- "$(readlink -f "${BASH_SOURCE}")")
 
 readonly TARGET=sunxi
 readonly SUBTARGET=cortexa53
-readonly PROFILE=friendlyarm_nanopi-neo2
+readonly PROFILE=friendlyarm_nanopi-r1s-h5
 . ${SCRIPTDIR}/../init-vars.sh
 
 PKGS=(
