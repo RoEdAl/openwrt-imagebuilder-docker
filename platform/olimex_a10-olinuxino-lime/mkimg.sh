@@ -12,36 +12,8 @@ readonly SUBTARGET=cortexa8
 readonly PROFILE=olimex_a10-olinuxino-lime
 . ${SCRIPTDIR}/../init-vars.sh
 
-PKGS=(
-	kmod-nf-conntrack-netlink
-	kmod-ledtrig-activity
-	nano
-	usbutils
-	htop iftop iperf3
-	shadow-useradd shadow-usermod shadow-chpasswd
-	shadow-groupadd shadow-groupmod
-	sudo
-	iptables-nft ip6tables-nft
-	docker dockerd docker-compose
-	kmod-fs-vfat kmod-nls-cp852 dosfstools
-	kmod-fs-f2fs f2fs-tools
-	block-mount
-	kmod-usb-storage
-	lsblk fdisk sfdisk losetup
-	libcap-bin
-)
-
-NPKGS=(
-	ppp
-	ppp-mod-pppoe
-	luci lua
-	dnsmasq
-	odhcp6c
-	odhcpd-ipv6only
-)
-
 MERGED_FILES=$(overlay_ro ${SCRIPTDIR}/files ${OPENWRTDIR}/system ${DOCKERDIR}/dockerd ${DOCKERDIR}/pi-hole ${DOCKERDIR}/blocky)
-PACKAGES="${PKGS[@]} ${NPKGS[@]/#/-}"
+PACKAGES="${IMGPKGS[@]} ${IMGNPKGS[@]/#/-}"
 if make -C ${OPENWRTDIR}/${IMAGEBUILDERDIR} image \
 	PROFILE=${PROFILE} \
 	PACKAGES="$PACKAGES" \
@@ -53,7 +25,7 @@ then
     gzip -dq ${OPENWRTDIR}/${IMAGEBUILDERDIR}/${IMGDIR}/${IMGFILE}.gz
     mv ${OPENWRTDIR}/${IMAGEBUILDERDIR}/${IMGDIR}/${IMGFILE} ${SCRIPTDIR}
     IMG_SIZE=$(stat --printf="%s" ${SCRIPTDIR}/${IMGFILE})
-    NEW_IMG_SIZE_MB=$((20+280+512))
+    NEW_IMG_SIZE_MB=$((20+280+1024))
     truncate -c -s "${NEW_IMG_SIZE_MB}MB" ${SCRIPTDIR}/${IMGFILE}
     LAST_FREE=($(sfdisk -q -F ${SCRIPTDIR}/${IMGFILE} | tail -n 1))
     echo -e "${LAST_FREE[0]}" | sfdisk -q -a ${SCRIPTDIR}/${IMGFILE}

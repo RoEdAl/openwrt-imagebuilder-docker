@@ -12,37 +12,12 @@ readonly SUBTARGET=cortexa53
 readonly PROFILE=friendlyarm_nanopi-r1s-h5
 . ${SCRIPTDIR}/../init-vars.sh
 
-PKGS=(
-	kmod-nf-conntrack-netlink
-	kmod-ledtrig-activity
-	nano
-	usbutils
-	htop iftop iperf3
-	shadow-useradd shadow-usermod shadow-chpasswd
-	shadow-groupadd shadow-groupmod
-	sudo
-	iptables-nft ip6tables-nft
-	docker dockerd docker-compose
-	kmod-fs-vfat kmod-nls-cp852 dosfstools
-	kmod-fs-f2fs f2fs-tools
-	block-mount
-	kmod-usb-storage
-	lsblk fdisk sfdisk losetup
+declare -r -a PKGS=(
 	irqbalance
-	libcap-bin
-)
-
-NPKGS=(
-	ppp
-	ppp-mod-pppoe
-	luci lua
-	dnsmasq
-	odhcp6c
-	odhcpd-ipv6only
 )
 
 MERGED_FILES=$(overlay_ro ${SCRIPTDIR}/files ${OPENWRTDIR}/system ${DOCKERDIR}/dockerd ${DOCKERDIR}/pi-hole ${DOCKERDIR}/blocky)
-PACKAGES="${PKGS[@]} ${NPKGS[@]/#/-}"
+PACKAGES="${IMGPKGS[@]} ${PKGS[@]} ${IMGNPKGS[@]/#/-}"
 if make -C ${OPENWRTDIR}/${IMAGEBUILDERDIR} image \
 	PROFILE=${PROFILE} \
 	PACKAGES="$PACKAGES" \
