@@ -23,10 +23,10 @@ declare -r -a IMGPKGS=(
 	sudo
 	iptables-nft ip6tables-nft
 	docker dockerd docker-compose
-	kmod-fs-vfat kmod-nls-cp852 dosfstools
-	kmod-fs-f2fs f2fs-tools
+	kmod-fs-vfat kmod-nls-cp852 kmod-nls-iso8859-2 dosfstools
+	kmod-fs-f2fs f2fsck mkf2fs
 	block-mount
-	kmod-usb-storage
+	kmod-usb-storage kmod-usb-storage-uas kmod-usb-storage-extras
 	lsblk fdisk sfdisk losetup
 	libcap-bin
 )
