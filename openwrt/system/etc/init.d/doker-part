@@ -7,7 +7,7 @@ DOCKERPART=${SDCARD}p3
 boot() {
     # docker partition
     [ -b ${DOCKERPART} ] || return 0
-    uci -q get fstab.docker.uuid 2&>1 >/dev/null && return 0
+    uci -q get fstab.docker.uuid && return 0
     
     FSUUID=$(lsblk --noheadings -o UUID ${DOCKERPART})
 
@@ -22,10 +22,11 @@ boot() {
     fi
     
     uci -q batch << EOF
-set fstab.docker=mount
-set fstab.docker.uuid=${FSUUID}
-set fstab.docker.target=/opt/docker
-set fstab.docker.enabled=1
+set fstab.@mount[-1].uuid=${FSUUID}
+set fstab.@mount[-1].target=/opt/docker
+set fstab.@mount[-1].options=atgc
+set fstab.@mount[-1].enabled=1
+rename fstab.@mount[-1]=docker
 commit fstab
 EOF
 }
