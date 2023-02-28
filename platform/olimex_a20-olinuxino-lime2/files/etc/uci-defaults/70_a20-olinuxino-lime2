@@ -1,0 +1,13 @@
+#
+# A20 oLinuXini Lime2 - configuration
+#
+
+uci -q batch << EOF
+set system.usr_led=led
+set system.usr_led.sysfs=a20-olinuxino-lime2:green:usr
+set system.usr_led.trigger=activity
+commit system
+set network.globals.packet_steering=1
+commit network
+EOF
+

@@ -8,6 +8,7 @@
 * [`xunlong_orangepi-one`](platform/xunlong_orangepi-one) - [OrangePi One](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-One.html),
 * [`xunlong_orangepi-zero`](platform/xunlong_orangepi-zero) - OrangePi Zero *(experimental)*,
 * [`olimex_a10-olinuxino-lime`](platform/olimex_a10-olinuxino-lime) - [Olimex OLinuXino LIME A10](//www.olimex.com/Products/OLinuXino/A10/A10-OLinuXino-LIME-n4GB/open-source-hardware),
+* [`olimex_a20-olinuxino-lime2`](platform/olimex_a20-olinuxino-lime2) - [Olimex OLinuXino LIME2](//www.olimex.com/Products/OLinuXino/A20/A20-OLinuXino-LIME2/open-source-hardware),
 * [`rpi`](platform/rpi) - Raspberry Pi B(+)/Zero *(1st gen)*.
 
 ## Requirements
