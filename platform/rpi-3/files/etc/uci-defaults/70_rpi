@@ -1,0 +1,23 @@
+#
+# rpi-3 - configuration
+#
+
+BMAC=$(printf "%02x" $(( $(hexdump -n1 -e'/1 "0x%02x"' /dev/urandom) & ~1 | 2)) && hexdump -n5 -e'/1 ":%02x"' /dev/urandom)
+CPUSERIAL=$(cat /sys/firmware/devicetree/base/serial-number | sed 's/^0*//')
+
+uci -q batch << EOF
+set system.rngd=rngd
+set system.rngd.enabled=1
+set system.rngd.device=/dev/hwrng
+set system.led0=led
+set system.led0.sysfs=led0
+set system.led0.trigger=activity
+commit system
+add_list network.@device[0].ports=eth1
+commit network
+EOF
+
+# configuration (boot partition)
+mv /etc/rpi/config.txt /boot/config.txt
+rmdir /etc/rpi
+

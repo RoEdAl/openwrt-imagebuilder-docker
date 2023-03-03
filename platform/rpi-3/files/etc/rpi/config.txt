@@ -1,0 +1,14 @@
+#
+# custom configuration
+#
+
+[pi3]
+gpu_mem=24
+hdmi_blanking=1
+disable_splash=1
+max_framebuffers=0
+overlay=disable-wifi
+overlay=disable-bt
+
+[all]
+
