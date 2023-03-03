@@ -38,28 +38,12 @@
     ./mkimg.sh
     ```
 
-   First run of this script fails.
-   You must manually change configuration of image builder:
-
-   ```.bash
-   cd ../../openwrt/openwrt-imagebuilder-22.03.3-sunxi-cortexa8.Linux-x86_64
-   nano .config
-   ```
-
-   find `CONFIG_TARGET_ROOTFS_PARTSIZE` config option and change its value to `280`:
-
-   ```
-   CONFIG_TARGET_ROOTFS_PARTSIZE=280
-   ```
-
-   Now back to platform's directory and run `mkimg.sh` again:
-
-   ```.bash
-   cd ../../platform/olimex_a10-olinuxino-lime
-   ./mkimg.sh
-   ```
-
-  After successful execution you should find uncompressed image file at current directory.
+  After successful execution you should find uncompressed image file at current directory:
+  
+  ```.bash
+  # ls *.img
+  openwrt-22.03.3-docker-sunxi-cortexa8-olimex_a10-olinuxino-lime-squashfs-sdcard.img
+  ```
 
 ## Booting OpenWRT
 

@@ -6,6 +6,7 @@ readonly OPENWRTVER=22.03.3
 readonly OPENWRTDIR=${SCRIPTDIR}/../../openwrt
 readonly DOCKERDIR=${SCRIPTDIR}/../../docker
 readonly IMAGEBUILDERDIR=openwrt-imagebuilder-${OPENWRTVER}-${TARGET}-${SUBTARGET}.Linux-x86_64
+readonly IMAGEBUILDERFIXDIR=openwrt-imagebuilder-${OPENWRTVER}-${TARGET}-${SUBTARGET}.fix
 readonly IMGDIR=bin/targets/${TARGET}/${SUBTARGET}
 readonly IMGFILE_BASE=openwrt-${OPENWRTVER}-docker-${TARGET}-${SUBTARGET}-${PROFILE}
 readonly IMGFILE=${IMGFILE_BASE}-squashfs-sdcard.img
@@ -45,6 +46,16 @@ declare -r -a IMGNPKGS=(
 if [ ! -d ${OPENWRTDIR}/${IMAGEBUILDERDIR} ]; then
     wget -nv -O ${OPENWRTDIR}/${IMAGEBUILDERDIR}.tar.xz http://downloads.openwrt.org/releases/${OPENWRTVER}/targets/${TARGET}/${SUBTARGET}/${IMAGEBUILDERDIR}.tar.xz
     tar -C ${OPENWRTDIR} -xf ${OPENWRTDIR}/${IMAGEBUILDERDIR}.tar.xz
+    rm ${OPENWRTDIR}/${IMAGEBUILDERDIR}.tar.xz
+    readonly FIXDIR=${OPENWRTDIR}/${IMAGEBUILDERFIXDIR}
+    if [ -d ${FIXDIR} ]; then
+        readonly FIXSCRIPTPATH=${FIXDIR}/fix-image-builder.sh
+        if [ -x ${FIXSCRIPTPATH} ]; then
+    	    . ${FIXSCRIPTPATH}
+        fi
+    fi
+    make -C ${OPENWRTDIR}/${IMAGEBUILDERDIR} clean    
+    sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=280/' ${OPENWRTDIR}/${IMAGEBUILDERDIR}/.config
 fi
 
 join_by () {
