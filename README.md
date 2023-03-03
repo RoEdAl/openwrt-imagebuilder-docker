@@ -3,6 +3,7 @@
 ## Supported platforms
 
 * [`friendlyarm_nanopi-neo`](platform/friendlyarm_nanopi-neo) - [NanoPi NEO](//www.friendlyelec.com/index.php?route=product/product&product_id=132),
+* [`friendlyarm_zeropi`](platform/friendlyarm_zeropi) - [ZeroPi](//www.friendlyelec.com/index.php?route=product/product&product_id=266),
 * [`friendlyarm_nanopi-neo2`](platform/friendlyarm_nanopi-neo2) - NanoPi NEO2,
 * [`friendlyarm_nanopi-r1s-h5`](platform/friendlyarm_nanopi-r1s-h5) - [NanoPi R1S (H5)](//www.friendlyelec.com/index.php?route=product/product&path=69&product_id=274),
 * [`xunlong_orangepi-one`](platform/xunlong_orangepi-one) - [OrangePi One](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-One.html),
