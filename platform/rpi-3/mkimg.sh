@@ -19,17 +19,16 @@ readonly PROFILE=rpi-3
 
 declare -r -a PKGS=(
 	bcm27xx-userland
-	kmod-i2c-bcm2835
 	kmod-usb2
-	kmod-usb-net-rtl8152 kmod-usb-net-asix
 	rng-tools
+	irqbalance
 )
 
 declare -r -a NPKGS=(
 	kmod-sound-core kmod-sound-arm-bcm2835
 	bcm27xx-gpu-fw
 	wpad-basic-wolfssl
-	cypress-firmware-43430-sdio cypress-nvram-43430-sdio-rpi-zero-w
+	cypress-firmware-43430-sdio cypress-firmware-43455-sdio cypress-nvram-43430-sdio-rpi-3b cypress-nvram-43455-sdio-rpi-3b-plus
 	kmod-brcmfmac brcmfmac-firmware-usb kmod-brcmutil
 	iw iwinfo
 	urandom-seed
