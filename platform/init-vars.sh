@@ -2,7 +2,7 @@
 #
 #
 
-readonly OPENWRTVER=22.03.3
+readonly OPENWRTVER=22.03.5
 readonly OPENWRTDIR=${SCRIPTDIR}/../../openwrt
 readonly DOCKERDIR=${SCRIPTDIR}/../../docker
 readonly IMAGEBUILDERDIR=openwrt-imagebuilder-${OPENWRTVER}-${TARGET}-${SUBTARGET}.Linux-x86_64
