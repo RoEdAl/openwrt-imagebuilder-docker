@@ -67,7 +67,8 @@ jobs:
       with:
         path: |
           openwrt
-          !openwrt/system'
+          !openwrt/system
+          !openwrt/*.fix
         key: ${{ steps.cache-owrtimgb-restore.outputs.cache-primary-key }}
 
     - name: Build pakage
