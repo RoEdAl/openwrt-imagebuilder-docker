@@ -1,0 +1,81 @@
+#
+# Building OpenWRT images
+#
+
+name: Image builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  image-builder:
+    runs-on: ubuntu-latest
+    env:
+      OWRTVER: 22.03.5
+
+    steps:
+    - name: Install packages
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: |
+          build-essential libncurses-dev libncurses5-dev
+          zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python3
+          fuse-overlayfs
+
+    - name: Git configuration
+      run: git config --global advice.detachedHead false
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Restore OpenWRT image builders from cache
+      id: cache-owrtimgb-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          openwrt
+          !openwrt/system
+          !openwrt/*.fix
+        key: ${{ runner.os }}-owrtimgb
+  
+    - name: Download OpenWRT image builders
+      if: steps.cache-owrtimgb-restore.outputs.cache-hit != 'true'
+      run: |
+        cd openwrt
+        OPENWRTDIR=$(pwd)
+        for a in sunxi-cortexa7 sunxi-cortexa53 sunxi-cortexa8 bcm27xx-bcm2708 bcm27xx-bcm2708; do
+          sd=$(echo $a|cut -d '-' --output-delimiter '/' -f 1-2)
+          IMAGEBUILDERDIR=openwrt-imagebuilder-${OWRTVER}-$a.Linux-x86_64
+          echo Image ${IMAGEBUILDERDIR}
+          wget -q https://downloads.openwrt.org/releases/${OWRTVER}/targets/$sd/${IMAGEBUILDERDIR}.tar.xz
+          tar -xf ${IMAGEBUILDERDIR}.tar.xz
+          rm ${IMAGEBUILDERDIR}.tar.xz
+          make -C ${IMAGEBUILDERDIR} clean
+          sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=280/' ${IMAGEBUILDERDIR}/.config
+        done
+
+        for a in sunxi-cortexa7 sunxi-cortexa8; do
+          IMAGEBUILDERDIR=openwrt-imagebuilder-${OWRTVER}-$a.Linux-x86_64
+          echo Fix ${IMAGEBUILDERDIR}
+          FIXDIR=${OPENWRTDIR}/openwrt-imagebuilder-${OWRTVER}-$a.fix
+          . ${FIXDIR}/fix-image-builder.sh
+        done
+        
+    - name: Save OpenWRT image builders to cache
+      id: cache-owrtimgb-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          openwrt
+          !openwrt/system'
+        key: ${{ steps.cache-owrtimgb-restore.outputs.cache-primary-key }}
+
+    - name: Build pakage
+      run: |
+        cd platform/rpi
+        for p in friendlyarm_nanopi-neo friendlyarm_nanopi-neo2 friendlyarm_nanopi-r1s-h5 friendlyarm_zeropi olimex_a10-olinuxino-lime olimex_a20-olinuxino-lime2 rpi rpi-3 xunlong_orangepi-one xunlong_orangepi-zero; do
+          echo Platform $p
+          cd ../$p
+          ./mkimg.sh
+        done
+        cd ..

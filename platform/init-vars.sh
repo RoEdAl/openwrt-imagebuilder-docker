@@ -54,7 +54,7 @@ if [ ! -d ${OPENWRTDIR}/${IMAGEBUILDERDIR} ]; then
     	    . ${FIXSCRIPTPATH}
         fi
     fi
-    make -C ${OPENWRTDIR}/${IMAGEBUILDERDIR} clean    
+    make -C ${OPENWRTDIR}/${IMAGEBUILDERDIR} clean
     sed -i 's/CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=280/' ${OPENWRTDIR}/${IMAGEBUILDERDIR}/.config
 fi
 
