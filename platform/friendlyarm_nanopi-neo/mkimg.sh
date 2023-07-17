@@ -34,6 +34,7 @@ then
     LAST_FREE=($(sfdisk -q -F ${SCRIPTDIR}/${IMGFILE} | tail -n 1))
     echo -e "${LAST_FREE[0]}" | sfdisk -q -a ${SCRIPTDIR}/${IMGFILE}
     truncate -c -s ${IMG_SIZE} ${SCRIPTDIR}/${IMGFILE}
+    xz -q9 -T0 ${SCRIPTDIR}/${IMGFILE}
     # fallocate -d ${SCRIPTDIR}/${IMGFILE}
     # tar -C ${SCRIPTDIR} --remove-files -Scf ${IMGFILE/%.img/.tar} ${IMGFILE}
 else

@@ -53,6 +53,7 @@ then
     LAST_FREE=($(sfdisk -q -F ${SCRIPTDIR}/${IMGFILE_FACTORY} | tail -n 1))
     echo -e "${LAST_FREE[0]}" | sfdisk -q -a ${SCRIPTDIR}/${IMGFILE_FACTORY}
     truncate -c -s ${IMG_SIZE} ${SCRIPTDIR}/${IMGFILE_FACTORY}
+	xz -q9 -T0 ${SCRIPTDIR}/${IMGFILE_FACTORY}
     #fallocate -d ${SCRIPTDIR}/${IMGFILE_FACTORY}
     # tar -C ${SCRIPTDIR} --remove-files -Scf ${IMGFILE/%.img/.tar} ${IMGFILE}
 else

@@ -99,4 +99,4 @@ jobs:
       with:
         draft: true
         files: |
-          platform/**/openwrt-${{ env.OWRTVER }}-docker-*.img
+          platform/**/openwrt-${{ env.OWRTVER }}-docker-*.img.xz
