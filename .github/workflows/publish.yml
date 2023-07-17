@@ -1,14 +1,19 @@
 #
-# Building OpenWRT images
+# Publishing OpenWRT images
 #
 
-name: Image builder
+name: Image publisher
+
+permissions:
+    contents: write
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - v22.03.*-*
 
 jobs:
-  image-builder:
+  publish:
     runs-on: ubuntu-latest
     env:
       OWRTVER: 22.03.5
@@ -79,9 +84,19 @@ jobs:
       run: |
         cd platform/rpi
         for p in friendlyarm_nanopi-neo friendlyarm_nanopi-neo2 friendlyarm_nanopi-r1s-h5 friendlyarm_zeropi olimex_a10-olinuxino-lime olimex_a20-olinuxino-lime2 rpi rpi-3 xunlong_orangepi-one xunlong_orangepi-zero; do
-        echo "::group::Platform $p"
+          echo "::group::Platform $p"
           cd ../$p
           ./mkimg.sh
           echo '::endgroup::'
         done
         cd ..
+
+    - name: Publish release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        draft: true
+        files: |
+          platform/**/openwrt-${{ env.OWRTVER }}-docker-*.img
